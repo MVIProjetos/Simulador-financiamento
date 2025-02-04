@@ -3,113 +3,155 @@
 <head>
   <meta charset="UTF-8">
   <title>Simulador de Financiamento Avançado</title>
+  <!-- Importa a fonte Roboto do Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Estilos Globais */
+    /* Reset básico */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    /* Estilo do body com fundo em degradê e centralização */
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 20px;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #74ABE2, #5563DE);
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+      padding: 1rem;
     }
-    .container {
+    
+    /* Card central com sombra e bordas arredondadas */
+    .card {
       background-color: #fff;
-      padding: 20px 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      max-width: 900px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       width: 100%;
+      max-width: 800px;
+      padding: 2rem;
     }
-    h2 {
+    
+    /* Cabeçalho do card */
+    .card h1 {
       text-align: center;
+      margin-bottom: 1.5rem;
       color: #333;
     }
-    label {
+    
+    /* Grupos de formulário */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .form-group label {
       display: block;
-      margin-top: 15px;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
       color: #555;
     }
-    input, select {
+    
+    .form-group input,
+    .form-group select {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      font-size: 1em;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
     }
-    .input-group {
-      margin-bottom: 10px;
-    }
+    
+    /* Estilo para o grupo de rádio */
     .radio-group {
-      margin-top: 10px;
       display: flex;
-      gap: 20px;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
     }
+    
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    
+    .radio-group input[type="radio"] {
+      margin-right: 0.25rem;
+    }
+    
+    /* Botão de ação */
     button {
       display: block;
       width: 100%;
-      margin-top: 20px;
-      padding: 12px;
-      font-size: 1.1em;
-      background-color: #007BFF;
-      border: none;
+      padding: 1rem;
+      background: #5563DE;
       color: #fff;
-      border-radius: 5px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
+    
     button:hover {
-      background-color: #0056b3;
+      background: #3a45b1;
     }
-    .resultado {
-      margin-top: 25px;
-      font-size: 1.1em;
+    
+    /* Área de resultados */
+    .result {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 1.2rem;
     }
-    .resultado span {
-      font-weight: bold;
+    
+    .result .meses {
+      color: #5563DE;
+      font-weight: 700;
     }
-    .meses-salvos {
-      color: #007BFF;
-    }
-    .valor-economizado {
+    
+    .result .economia {
       color: #28a745;
+      font-weight: 700;
     }
+    
+    /* Mensagens de alerta */
     .alerta {
       color: #ff0000;
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 1rem;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Simulador de Financiamento Avançado</h2>
+  <div class="card">
+    <h1>Simulador de Financiamento</h1>
     
-    <!-- Dados do Financiamento -->
-    <div class="input-group">
+    <!-- Campo Valor Financiado -->
+    <div class="form-group">
       <label for="valorFinanciado">Valor Financiado (R$):</label>
-      <input type="number" id="valorFinanciado" placeholder="Ex.: 300000" step="0.01" />
+      <input type="number" id="valorFinanciado" placeholder="Ex.: 300000" step="0.01">
     </div>
     
-    <div class="input-group">
+    <!-- Campo Taxa de Juros Anual -->
+    <div class="form-group">
       <label for="taxaJuros">Taxa de Juros Anual (%):</label>
-      <input type="number" id="taxaJuros" placeholder="Ex.: 12" step="0.01"/>
+      <input type="number" id="taxaJuros" placeholder="Ex.: 12" step="0.01">
     </div>
     
-    <div class="input-group">
+    <!-- Campo Prazo Total -->
+    <div class="form-group">
       <label for="prazo">Prazo Total (em meses):</label>
-      <input type="number" id="prazo" placeholder="Ex.: 360" />
+      <input type="number" id="prazo" placeholder="Ex.: 360">
     </div>
     
-    <!-- Valor para Amortização Extra (Lump Sum) -->
-    <div class="input-group">
+    <!-- Campo Valor de Amortização Extra -->
+    <div class="form-group">
       <label for="amortizacaoExtra">Valor de Amortização Extra (R$):</label>
-      <input type="number" id="amortizacaoExtra" placeholder="Ex.: 50000" step="0.01"/>
+      <input type="number" id="amortizacaoExtra" placeholder="Ex.: 50000" step="0.01">
     </div>
     
-    <!-- Já Pagou -->
-    <div class="input-group">
+    <!-- Campo Pagamentos já realizados -->
+    <div class="form-group">
       <label>Já Pagou:</label>
       <div class="radio-group">
         <label>
@@ -119,11 +161,11 @@
           <input type="radio" name="tipoPago" value="valor"> Em Valor (R$)
         </label>
       </div>
-      <input type="number" id="valorPago" placeholder="Ex.: 12 (se em meses) ou 36000 (se em valor)" step="0.01"/>
+      <input type="number" id="valorPago" placeholder="Ex.: 12 (se em meses) ou 36000 (se em valor)" step="0.01">
     </div>
     
-    <!-- Tipo de Amortização -->
-    <div class="input-group">
+    <!-- Campo Tipo de Amortização -->
+    <div class="form-group">
       <label for="tipoAmortizacao">Tipo de Amortização:</label>
       <select id="tipoAmortizacao">
         <option value="price">Price</option>
@@ -133,55 +175,50 @@
     
     <button onclick="calcularFinanciamento()">Calcular</button>
     
-    <div class="resultado" id="resultado"></div>
+    <div class="result" id="resultado"></div>
   </div>
   
   <script>
-    // Função para formatar valores em moeda (pt-BR)
+    // Formata um valor numérico para moeda (pt-BR)
     function formatarMoeda(valor) {
       return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
-
+    
     function calcularFinanciamento() {
-      // Recupera os valores dos campos
+      // Coleta os valores dos campos
       let P = parseFloat(document.getElementById('valorFinanciado').value);
       let taxaAnual = parseFloat(document.getElementById('taxaJuros').value);
       let n = parseInt(document.getElementById('prazo').value);
       let extra = parseFloat(document.getElementById('amortizacaoExtra').value) || 0;
       let tipo = document.getElementById('tipoAmortizacao').value;
-      
-      // Verifica o método de pagamento já realizado
       let tipoPago = document.querySelector('input[name="tipoPago"]:checked').value;
       let pagoInput = parseFloat(document.getElementById('valorPago').value) || 0;
-      
       const resultadoDiv = document.getElementById('resultado');
       
-      // Valida os campos obrigatórios
+      // Validação dos campos obrigatórios
       if (isNaN(P) || isNaN(taxaAnual) || isNaN(n) || P <= 0 || n <= 0) {
-        resultadoDiv.innerHTML = '<p class="alerta">Por favor, preencha corretamente Valor Financiado, Taxa de Juros e Prazo.</p>';
+        resultadoDiv.innerHTML = '<p class="alerta">Preencha corretamente os campos obrigatórios.</p>';
         return;
       }
       
-      // Converte taxa anual para taxa mensal (em decimal)
+      // Converte taxa anual para taxa mensal (decimal)
       let i = (taxaAnual / 100) / 12;
       
-      // Cálculo do pagamento fixo para Price
+      // Cálculo da parcela fixa para Price
       let A = 0;
       if (tipo === 'price') {
-        A = P * ((i * Math.pow(1+i, n)) / (Math.pow(1+i, n) - 1));
+        A = P * ((i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1));
       }
       
-      // Determina quantos meses já foram pagos (k) e o valor já pago
-      let k = 0; // número de meses pagos
+      // Determina quantos meses já foram pagos (k) e o valor total já pago
+      let k = 0;
       let valorPagoTotal = 0;
       if (tipoPago === 'meses') {
         k = Math.floor(pagoInput);
-        // Para Price, cada parcela é fixa; para SAC, o pagamento varia.
         if (tipo === 'price') {
           valorPagoTotal = A * k;
         } else if (tipo === 'sac') {
           let amortizacaoFixa = P / n;
-          // Simula os pagamentos em SAC para k meses
           let somaJuros = 0;
           let saldo = P;
           for (let j = 1; j <= k; j++) {
@@ -193,13 +230,10 @@
         }
       } else if (tipoPago === 'valor') {
         valorPagoTotal = pagoInput;
-        // Para Price, como a parcela é fixa, estimamos os meses pagos
         if (tipo === 'price') {
           k = Math.floor(valorPagoTotal / A);
         } else if (tipo === 'sac') {
           let amortizacaoFixa = P / n;
-          // Aproximadamente, em SAC o valor de cada parcela é: amortizacaoFixa + juros
-          // Estimamos k iterando até que o somatório dos pagamentos seja menor ou igual ao valor informado
           let soma = 0;
           k = 0;
           let saldo = P;
@@ -211,76 +245,63 @@
           }
         }
       }
-      // Se k for maior que o prazo, consideramos que o financiamento já está quitado
+      
+      // Se já pagou o suficiente para quitar o financiamento:
       if (k >= n) {
-        resultadoDiv.innerHTML = '<p class="alerta">O financiamento já foi completamente pago.</p>';
+        resultadoDiv.innerHTML = '<p class="alerta">O financiamento já foi quitado.</p>';
         return;
       }
       
       // Calcula o saldo devedor remanescente com base no sistema escolhido
       let saldoRestante = 0;
       if (tipo === 'price') {
-        // Fórmula do saldo devedor no sistema Price:
-        // B(k) = P * ((1+i)^n - (1+i)^k) / ((1+i)^n - 1)
-        saldoRestante = P * (Math.pow(1+i, n) - Math.pow(1+i, k)) / (Math.pow(1+i, n) - 1);
+        saldoRestante = P * (Math.pow(1 + i, n) - Math.pow(1 + i, k)) / (Math.pow(1 + i, n) - 1);
       } else if (tipo === 'sac') {
-        // Em SAC, a amortização fixa é P/n e após k meses:
-        saldoRestante = P - (P/n) * k;
+        saldoRestante = P - (P / n) * k;
       }
       
-      // Cenário SEM a amortização extra (a partir do saldoRestante)
-      let mesesSemExtra = 0;
+      // Cenário SEM amortização extra
+      let mesesSemExtra = n - k;
       let jurosSemExtra = 0;
       if (tipo === 'price') {
-        mesesSemExtra = n - k; 
         jurosSemExtra = A * mesesSemExtra - saldoRestante;
       } else if (tipo === 'sac') {
-        mesesSemExtra = n - k;
-        // Calcula a soma dos juros sem amortização extra:
-        // Para cada mês j (1 a r), juros = (saldoRestante - (j-1)*(P/n)) * i
         for (let j = 1; j <= mesesSemExtra; j++) {
-          let saldoMes = saldoRestante - (P/n) * (j-1);
+          let saldoMes = saldoRestante - (P / n) * (j - 1);
           jurosSemExtra += saldoMes * i;
         }
       }
       
-      // Cenário COM a amortização extra: aplica o valor extra imediatamente no saldo restante
+      // Cenário COM amortização extra: aplica o valor extra no saldo restante
       let saldoNovo = saldoRestante - extra;
       if (saldoNovo < 0) saldoNovo = 0;
       
       let mesesComExtra = 0;
       let jurosComExtra = 0;
-      
       if (tipo === 'price') {
         if (saldoNovo > 0) {
-          // Fórmula para número de parcelas necessárias:
-          // m = log(A/(A - saldoNovo * i)) / log(1+i)
-          mesesComExtra = Math.ceil(Math.log(A/(A - saldoNovo * i)) / Math.log(1+i));
+          mesesComExtra = Math.ceil(Math.log(A / (A - saldoNovo * i)) / Math.log(1 + i));
         } else {
           mesesComExtra = 0;
         }
         jurosComExtra = A * mesesComExtra - saldoNovo;
       } else if (tipo === 'sac') {
-        // Em SAC, a amortização fixa permanece P/n
         let amortizacaoFixa = P / n;
-        // Número de meses necessários para quitar saldoNovo:
         mesesComExtra = Math.ceil(saldoNovo / amortizacaoFixa);
-        // Soma os juros para os meses necessários
         for (let j = 1; j <= mesesComExtra; j++) {
-          let saldoMes = saldoNovo - amortizacaoFixa * (j-1);
+          let saldoMes = saldoNovo - amortizacaoFixa * (j - 1);
           if (saldoMes < 0) saldoMes = 0;
           jurosComExtra += saldoMes * i;
         }
       }
       
-      // Calcula os ganhos:
+      // Calcula os ganhos
       let mesesAbatidos = mesesSemExtra - mesesComExtra;
       let jurosEconomizados = jurosSemExtra - jurosComExtra;
       
-      // Formata os resultados em cores diferentes
-      let resultadoHTML = '';
-      resultadoHTML += `<p class="meses-salvos">Meses abatidos: <span>${mesesAbatidos}</span></p>`;
-      resultadoHTML += `<p class="valor-economizado">Valor economizado (em juros): <span>${formatarMoeda(jurosEconomizados)}</span></p>`;
+      // Exibe os resultados com cores diferentes
+      let resultadoHTML = `<p class="meses">Meses abatidos: <span>${mesesAbatidos}</span></p>`;
+      resultadoHTML += `<p class="economia">Valor economizado (em juros): <span>${formatarMoeda(jurosEconomizados)}</span></p>`;
       
       resultadoDiv.innerHTML = resultadoHTML;
     }
